@@ -1,66 +1,90 @@
-// script.js
-const judul = document.getElementById("judul");
-const pesan = document.getElementById("pesan");
-judul.textContent = "Belajar JavaScript DOM";
-pesan.textContent = "Konten berhasil diubah oleh JavaScript.";
-const tombol = document.getElementById("tombolAksi");
-tombol.addEventListener("click", function () {
-pesan.textContent = "Tombol diklik pada " + new Date().toLocaleTimeString();
+// Mengambil elemen-elemen DOM
+const formWorkshop = document.getElementById("formWorkshop");
+const namaWorkshop = document.getElementById("namaWorkshop");
+const emailWorkshop = document.getElementById("emailWorkshop");
+const pilihanSesi = document.getElementById("pilihanSesi");
+
+const sisaKarakter = document.getElementById("sisaKarakter");
+const infoSesi = document.getElementById("infoSesi");
+const pesanFeedback = document.getElementById("pesanFeedback");
+const btnReset = document.getElementById("btnReset");
+
+// Elemen Preview / Ringkasan Langsung
+const previewNama = document.getElementById("previewNama");
+const previewEmail = document.getElementById("previewEmail");
+const previewSesi = document.getElementById("previewSesi");
+
+// 1. Event Input: Penghitung Karakter & Live Preview Nama
+namaWorkshop.addEventListener("input", function () {
+  const panjang = namaWorkshop.value.length;
+  sisaKarakter.textContent = panjang;
+  previewNama.textContent = namaWorkshop.value.trim() === "" ? "-" : namaWorkshop.value;
 });
-const tombolGaya = document.getElementById("tombolGaya");
-const teksGaya = document.getElementById("teksGaya");
-tombolGaya.addEventListener("click", function () {
-teksGaya.classList.toggle("highlight");
-teksGaya.classList.toggle("teks-besar");
+
+// Live Preview Email
+emailWorkshop.addEventListener("input", function () {
+  previewEmail.textContent = emailWorkshop.value.trim() === "" ? "-" : emailWorkshop.value;
 });
-const namaInput = document.getElementById("namaInput");
-const jumlahKarakter = document.getElementById("jumlahKarakter");
-namaInput.addEventListener("input", function () {
-jumlahKarakter.textContent = namaInput.value.length;
+
+// 2. Event Change: Menampilkan info pilihan sesi workshop secara dinamis & Live Preview Sesi
+pilihanSesi.addEventListener("change", function () {
+  const sesiTerpilih = pilihanSesi.value;
+  if (sesiTerpilih !== "") {
+    infoSesi.textContent = "Anda memilih: " + sesiTerpilih;
+    previewSesi.textContent = sesiTerpilih;
+  } else {
+    infoSesi.textContent = "";
+    previewSesi.textContent = "-";
+  }
 });
-const form = document.getElementById("formPendaftaran");
-const pesanForm = document.getElementById("pesanForm");
-form.addEventListener("submit", function (event) {
-event.preventDefault();
-const nama = document.getElementById("nama").value.trim();
-const email = document.getElementById("email").value.trim();
-const usiaInput = document.getElementById("usia").value;
-const usia = Number(usiaInput);
-const polaEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-if (nama === "") {
-pesanForm.textContent = "Nama wajib diisi.";
-} else if (!polaEmail.test(email)) {pesanForm.textContent = "Masukkan email yang valid.";
-} else if (usiaInput === "" || !Number.isInteger(usia) || usia < 17 || usia > 100) {
-pesanForm.textContent = "Usia harus berupa bilangan bulat 17–100.";
-} else {
-pesanForm.textContent = "Validasi berhasil. Form siap diproses.";
-form.reset();
+
+// 3. Event Submit: Validasi Form Pendaftaran Lengkap
+formWorkshop.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const nama = namaWorkshop.value.trim();
+  const email = emailWorkshop.value.trim();
+  const sesi = pilihanSesi.value;
+
+  const polaEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Logika Pemeriksaan Kondisi Form
+  if (nama === "") {
+    tampilkanPesan("Nama lengkap wajib diisi!", "error");
+  } else if (nama.length < 3) {
+    tampilkanPesan("Nama lengkap minimal harus terdiri dari 3 karakter.", "error");
+  } else if (!polaEmail.test(email)) {
+    tampilkanPesan("Format email tidak valid (contoh: nama@email.com).", "error");
+  } else if (sesi === "") {
+    tampilkanPesan("Silakan pilih salah satu sesi workshop terlebih dahulu.", "error");
+  } else {
+    tampilkanPesan("Pendaftaran berhasil! Data workshop Anda telah tercatat.", "sukses");
+    // Opsional: reset form setelah berhasil
+    // formWorkshop.reset();
+    // resetPreview();
+  }
+});
+
+// 4. Event Click: Tombol Reset / Hapus Input Manual
+btnReset.addEventListener("click", function () {
+  formWorkshop.reset();
+  sisaKarakter.textContent = "0";
+  infoSesi.textContent = "";
+  pesanFeedback.textContent = "";
+  pesanFeedback.className = "";
+  resetPreview();
+});
+
+// Fungsi bantu untuk menampilkan pesan feedback
+function tampilkanPesan(pesan, tipe) {
+  pesanFeedback.textContent = pesan;
+  pesanFeedback.className = ""; // Bersihkan class sebelumnya
+  pesanFeedback.classList.add(tipe);
 }
-});
-const inputTugas = document.getElementById("inputTugas");
-const tambahTugas = document.getElementById("tambahTugas");
-const daftarTugas = document.getElementById("daftarTugas");
-const pesanTugas = document.getElementById("pesanTugas");
-tambahTugas.addEventListener("click", function () {
-const teks = inputTugas.value.trim();
-if (teks === "") {
-pesanTugas.textContent = "Tulis tugas terlebih dahulu.";
-return;
+
+// Fungsi bantu untuk mengosongkan teks preview
+function resetPreview() {
+  previewNama.textContent = "-";
+  previewEmail.textContent = "-";
+  previewSesi.textContent = "-";
 }
-const item = document.createElement("li");
-const label = document.createElement("span");
-const selesai = document.createElement("button");
-label.textContent = teks + " ";
-selesai.type = "button";
-selesai.textContent = "Tandai selesai";
-selesai.addEventListener("click", function () {
-item.classList.toggle("selesai");
-selesai.textContent = item.classList.contains("selesai")
-? "Batalkan selesai" : "Tandai selesai";
-});
-item.append(label, selesai);
-daftarTugas.appendChild(item);
-inputTugas.value = "";
-pesanTugas.textContent = "Tugas ditambahkan.";
-inputTugas.focus();
-});
