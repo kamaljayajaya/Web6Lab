@@ -1,0 +1,130 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f9;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+input[type="text"],
+input[type="email"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+input:focus, select:focus {
+  border-color: #3478c8;
+  outline: none;
+}
+
+.info-karakter, .info-sesi {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+  display: block;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+#btnReset {
+  background-color: #dc3545;
+  color: white;
+}
+
+#btnReset:hover {
+  background-color: #c82333;
+}
+
+#pesanFeedback {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.sukses {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.card-ringkasan {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #e9ecef;
+  border-radius: 6px;
+}
+
+.card-ringkasan h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.card-ringkasan p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+  color: #555;
+}
